@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +29,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += QuandoCenaCarregada;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= QuandoCenaCarregada;
+    }
+
     void Start()
     {
         MudarEstado(EstadoJogo.Iniciando);
@@ -50,6 +62,20 @@ public class GameManager : MonoBehaviour
             case EstadoJogo.Gameplay:
                 SceneManager.LoadScene("GetStarted_Scene");
                 break;
+        }
+    }
+
+    void QuandoCenaCarregada(Scene scene, LoadSceneMode mode)
+    {
+        if (estadoAtual == EstadoJogo.Gameplay)
+        {
+           PlayerInput player = FindFirstObjectByType<PlayerInput>();
+
+            if (player != null)
+            {
+                player.ActivateInput();
+                Debug.Log("Input ativado para o jogador");
+            }
         }
     }
 

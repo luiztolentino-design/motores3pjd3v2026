@@ -1,16 +1,15 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public class MenuUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void IniciarJogo()
     {
-        
+        GameManager.Instance.IniciarJogo();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SairJogo()
     {
-        
+        GameManager.Instance.MudarEstado(GameManager.EstadoJogo.Iniciando);
     }
 }
